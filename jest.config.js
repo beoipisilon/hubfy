@@ -6,7 +6,13 @@ const createJestConfig = nextJest({
 
 const customJestConfig = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-    testEnvironment: 'jest-environment-jsdom',
+    testEnvironment: 'node',
+    testEnvironmentOptions: {
+        customExportConditions: [''],
+    },
+    transformIgnorePatterns: [
+        'node_modules/(?!(next)/)',
+    ],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
@@ -22,6 +28,17 @@ const customJestConfig = {
             functions: 60,
             lines: 60,
             statements: 60,
+        },
+    },
+    testMatch: [
+        '**/__tests__/**/*.[jt]s?(x)',
+        '**/?(*.)+(spec|test).[jt]s?(x)',
+    ],
+    globals: {
+        'ts-jest': {
+            tsconfig: {
+                jsx: 'react',
+            },
         },
     },
 }
